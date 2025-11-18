@@ -1,55 +1,61 @@
-# 🎬Analytics: IMDB Movie Dataset
-## ✨ Implementasi Formula Excel/Sheets
+# 🎬 Analytics: IMDB Movie Dataset
+## ✨ Excel & Google Sheets Implementation
 
- **Tools Kunci:** ⚙️ Microsoft Excel & Google Sheets
-
-### 📊 1. Ringkasan Proyek
-
-Proyek ini adalah demonstrasi *end-to-end* proses **Kontrol Kualitas Data (DQC)** yang sistematis, mengubah data mentah yang kompleks menjadi aset yang siap digunakan untuk *business intelligence* dan laporan operasional.
-
-**Nilai Jual:** Mampu membangun kerangka kerja **Validasi Data** dan **Kalkulasi Metrik Kinerja** yang akurat dan *real-time* langsung di *spreadsheet*, menghilangkan risiko *Garbage In, Garbage Out (GIGO)*.
+**Key Tools:** ⚙️ Microsoft Excel & Google Sheets
 
 ---
 
-### 🛠️ 2. Metodologi DQC & Fungsi Kunci (Excel/Sheets)
+### 📊 1. Project Overview
 
-Metodologi dibagi menjadi tiga tingkat kompleksitas untuk menunjukkan penguasaan dari pembersihan dasar hingga analisis prediktif berbasis formula.
+This project demonstrates an **end-to-end Data Quality Control (DQC)** workflow, transforming raw, complex IMDB data into actionable insights ready for **business intelligence** and operational reporting.
 
-#### A. Tingkat 1: Cleansing & Standarisasi Data (Essential)
-Fokus pada penanganan nilai hilang, duplikasi, dan penyeragaman format dasar.
-
-| # | Pilar DQC | Rumus Excel/Sheets | Logika Profesional (Action & Impact) |
-| :---: | :--- | :--- | :--- |
-| **1** | **Penanganan *Null Values*** | `=IF(ISBLANK(E2), "N/A", E2)` | **Mengisi Kesenjangan:** Mengganti sel kosong (Kolom `Duration`) dengan penanda. **Impact:** Mencegah *error* kalkulasi dan memastikan **kelengkapan data**. |
-| **2** | **Kontrol Duplikasi** | `=IF(COUNTIF(A$2:A2, A2)>1, "DUPLICATE", "UNIQUE")` | **Integritas Data:** Menandai *record* berdasarkan **IMBD ID** ganda. **Impact:** Menghasilkan dataset **unik** untuk analisis statistik yang valid. |
-| **3** | **Normalisasi Teks** | `=PROPER(TRIM(B2))` | **Konsistensi Format:** `TRIM` menghilangkan spasi ekstra; `PROPER` menyamakan kapitalisasi. **Impact:** **Memastikan *string* yang sama dikelompokkan** (misalnya pada kategori Genre). |
-| **4** | **Transformasi Tipe Data** | `=DATEVALUE(C2)` | **Kesiapan Analisis:** Mengubah teks tanggal ke **nilai serial Tanggal** fungsional. **Impact:** Data siap untuk analisis *time-series* (tren waktu). |
-
-#### B. Tingkat 2: Validasi Kualitas & Metrik Terkondisi (Mahir)
-Fokus pada *error handling* yang kuat, validasi rentang logis, dan kalkulasi metrik awal.
-
-| # | Pilar DQC | Rumus Excel/Sheets | Logika Profesional (Action & Impact) |
-| :---: | :--- | :--- | :--- |
-| **5** | **Validasi *Range* (Outlier)** | `=IF(AND(L2>=1, L2<=10), "VALID", "REVIEW")` | **Validasi Kredibilitas:** Memastikan `Score` (Kolom L) berada dalam rentang logis 1-10. **Impact:** **Mengisolasi *outlier*** yang dapat merusak perhitungan rata-rata. |
-| **6** | **Kontrol *Error* Lanjutan** | `=IFERROR(VLOOKUP(A2, Sheet2!A:B, 2, FALSE), "NOT FOUND")` | **Penggabungan Data Aman:** Mengganti *error* **#N/A** (dari *VLOOKUP*) dengan *string* informatif. **Impact:** **Meningkatkan *readability* laporan** dan integritas data. |
-| **7** | **Validasi Lintas Kolom** | `=AND(ISNUMBER(K2), ISBLANK(J2))` | **Pengecekan Kualitas Logis:** Memastikan `Income` (K2) adalah angka **DAN** kolom *Director* (J2) tidak kosong. **Impact:** Mengidentifikasi data yang secara logis harus lengkap, namun tidak. |
-| **8** | **Kalkulasi Metrik Dasar** | `=AVERAGEIF(F:F, "USA", K:K)` | **Analisis Kinerja:** Menghitung **Rata-rata Pendapatan** (Kolom K) hanya untuk film di **"USA"** (Kolom F). **Impact:** Menyediakan **metrik kinerja regional** yang akurat dari data yang sudah diseragamkan. |
-
-#### C. Tingkat 3: Analisis Operasional & Otomasi 
-Fokus pada *dynamic reporting*, *in-cell visualization*, dan kalkulasi berbasis waktu.
-
-| # | Pilar DQC | Rumus Excel/Sheets | Logika Profesional (Action & Impact) |
-| :---: | :--- | :--- | :--- |
-| **9** | **Analisis Kinerja Dinamis** | `=SUMIFS(K:K, F:F, "USA", C:C, ">"&YEAR(TODAY())-5)` | **Analisis Tren Bisnis:** Menghitung total `Income` (K) untuk `USA` (F) **HANYA** untuk 5 tahun terakhir (menggunakan `TODAY()`). **Impact:** Mendukung keputusan investasi dengan **data kinerja terkini** secara dinamis. |
-| **10** | **Visualisasi Kontrol Data** | `=REPT("█", ROUND(L2, 0))` | **Visualisasi In-Cell:** Membuat **bar visual** (*Sparkline* Teks) yang panjangnya sesuai dengan `Score` (L2). **Impact:** Memudahkan **Quality Assurance (QA)** dan **review data cepat** secara visual tanpa grafik. |
-| **11** | **Peringkat & Identifikasi Performer** | **Excel:** `=RANK.EQ(K2, K:K, 0)` **Sheets:** `=INDEX(FILTER(B:B, K:K=MAX(K:K)), 1, 1)` | **Metrik Kompetitif & Penemuan *Insight*:** Memberikan peringkat (rank) atau **Mengidentifikasi Nama Film *Top Performer*** (Pendapatan Maksimum) secara otomatis. **Impact:** **Otomatisasi laporan** dan penemuan *outlier* positif. |
+**Value Proposition:** Built a framework for **Data Validation** and **KPI Calculations** directly in spreadsheets, reducing the risk of **Garbage In, Garbage Out (GIGO)** and ensuring **real-time, accurate insights**.
 
 ---
 
-### 🚀 3. Kesimpulan dan Nilai Jual
+### 🛠️ 2. DQC Methodology & Key Formulas
 
-Kerangka kerja DQC ini adalah bukti kemampuan dalam:
+The methodology is organized into three levels of complexity, showcasing skills from **basic cleansing** to **predictive, formula-driven analysis**.
 
-1.  **Membangun *Framework* yang *Robust***: Mampu mendesain alur kerja data yang menjamin **kualitas dan validitas** dari hulu ke hilir.
-2.  **Dukungan Operasional Cepat:** Menggunakan fungsi kondisional dan agregasi untuk menghasilkan **metrik kinerja dinamis** tanpa ketergantungan pada *BI Tools* yang kompleks.
-3.  **Kesiapan Data:** Dataset akhir yang terjamin kualitasnya telah divalidasi dan siap diinput ke *platform* analisis lanjutan, mempercepat waktu *time-to-insight* (TTI).
+#### A. Level 1: Data Cleansing & Standardization (Essential)
+Focus on handling missing values, duplicates, and standardizing basic formats.
+
+| # | DQC Pillar | Excel/Sheets Formula | Professional Logic & Impact |
+|:-:|:---|:---|:---|
+| 1 | **Handle Null Values** | `=IF(ISBLANK(E2), "N/A", E2)` | **Fill Gaps:** Replace empty cells (Duration) with marker. **Impact:** Prevents calculation errors, ensures **data completeness**. |
+| 2 | **Duplicate Control** | `=IF(COUNTIF(A$2:A2, A2)>1, "DUPLICATE", "UNIQUE")` | **Data Integrity:** Flags duplicates based on **IMDB ID**. **Impact:** Produces a **unique dataset** for valid statistical analysis. |
+| 3 | **Text Normalization** | `=PROPER(TRIM(B2))` | **Consistency:** Removes extra spaces and standardizes capitalization. **Impact:** Groups identical strings (e.g., Genres) correctly. |
+| 4 | **Data Type Transformation** | `=DATEVALUE(C2)` | **Analysis Ready:** Converts text dates to serial **Date values**. **Impact:** Enables **time-series analysis**. |
+
+---
+
+#### B. Level 2: Quality Validation & Conditional Metrics (Advanced)
+Focus on strong error handling, logical range validation, and preliminary KPI calculations.
+
+| # | DQC Pillar | Excel/Sheets Formula | Professional Logic & Impact |
+|:-:|:---|:---|:---|
+| 5 | **Range Validation (Outliers)** | `=IF(AND(L2>=1, L2<=10), "VALID", "REVIEW")` | Ensures `Score` (L) is within 1-10. **Impact:** Isolates **outliers** affecting averages. |
+| 6 | **Advanced Error Handling** | `=IFERROR(VLOOKUP(A2, Sheet2!A:B, 2, FALSE), "NOT FOUND")` | Safely merges data and replaces `#N/A` errors. **Impact:** Improves **readability** and data integrity. |
+| 7 | **Cross-Column Validation** | `=AND(ISNUMBER(K2), ISBLANK(J2))` | Checks logical completeness: `Income` must be numeric AND `Director` not blank. **Impact:** Flags incomplete yet logically required data. |
+| 8 | **Basic KPI Calculation** | `=AVERAGEIF(F:F, "USA", K:K)` | Computes **Average Revenue** for films in the USA. **Impact:** Provides accurate **regional performance metrics**. |
+
+---
+
+#### C. Level 3: Operational Analysis & Automation
+Focus on **dynamic reporting**, **in-cell visualization**, and **time-based calculations**.
+
+| # | DQC Pillar | Excel/Sheets Formula | Professional Logic & Impact |
+|:-:|:---|:---|:---|
+| 9 | **Dynamic Performance Analysis** | `=SUMIFS(K:K, F:F, "USA", C:C, ">"&YEAR(TODAY())-5)` | Calculates total `Income` for USA films in the **last 5 years**. **Impact:** Supports **investment decisions** with up-to-date trends. |
+| 10 | **In-Cell Data Visualization** | `=REPT("█", ROUND(L2, 0))` | Creates **text-based sparkline bars** for `Score`. **Impact:** Enables quick **QA review** without charts. |
+| 11 | **Ranking & Top Performer Identification** | Excel: `=RANK.EQ(K2, K:K, 0)` <br> Sheets: `=INDEX(FILTER(B:B, K:K=MAX(K:K)), 1, 1)` | Automates **rankings** and identifies **top-grossing films**. **Impact:** Supports **report automation** and discovery of positive outliers. |
+
+---
+
+### 🚀 3. Conclusion & Value Proposition
+
+This DQC framework demonstrates the ability to:
+
+1. **Build Robust Frameworks:** Design workflows that ensure **data quality and validity** end-to-end.
+2. **Enable Fast Operational Insights:** Use conditional formulas and aggregation to produce **dynamic KPIs** without complex BI tools.
+3. **Prepare Analysis-Ready Data:** Deliver validated datasets ready for advanced analytics, accelerating **time-to-insight (TTI)**.
